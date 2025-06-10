@@ -1,4 +1,2 @@
 #!/bin/bash
-filename="*\\'\"Best School\"'\\*\$?*****:)"
-echo "Best School" > "$filename"
-echo "File '$filename' has been created successfully!"
+echo "echo "Best School" > '\\'"Best School"'\'\\$\?\\\\\*:)'"
