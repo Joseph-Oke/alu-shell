@@ -4,4 +4,4 @@
 # Ordered from greatest to lowest number of occurrences
 # Uses awk to parse and aggregate the apache-access.log file
 
-awk '{count[$1" "$9]++} END {for (combo in count) print count[combo], combo}' apache-access.log | sort -rn
+awk '{count[$1" "$9]++} END {for (combo in count) printf "%d %s\n", count[combo], combo}' apache-access.log | sort -rn
