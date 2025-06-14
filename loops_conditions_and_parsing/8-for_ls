@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Script that displays current directory content in list format, showing only part after first dash
+
+for file in *
+do
+	if [[ "$file" != .* ]]
+then
+	echo "${file#*-}"
+   fi
+done
