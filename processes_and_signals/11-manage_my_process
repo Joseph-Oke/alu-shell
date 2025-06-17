@@ -1,55 +1,30 @@
 #!/usr/bin/env bash
-# Init script to manage manage_my_process daemon
+# Init script manage_my_process (init script)
 
 case "$1" in
-      start)
-	./manage_my_process &
-	echo $! > /var/run/my_process.pid
-	echo "manage_my_process started"
-   ;;
-      stop)
-	if [ -f /var/run/my_process.pid ]; then
-	kill "$(cat /var/run/my_process.pid)"
-	rm -f /var/run/my_process.pid
-    fi
-	echo "manage_my_process stopped"
-   ;;
-     restart)
-     	if [ -f /var/run/my_process.pid ]; then
-	  kill "$(cat /var/run/my_process.pid)"
-	  rm -f /var/run/my_process.pid
-	fi
-	./manage_my_process &
-	echo $! > /var/run/my_process.pid
-	echo "manage_my_process restarted"
-   ;;
-*)
-	echo "Usage: manage_my_process {start|stop|restart}"
-   ;;
-case "$1" in
     start)
-        bash ./manage_my_process &
+        ./manage_my_process &
         echo $! > /var/run/my_process.pid
         echo "manage_my_process started"
         ;;
     stop)
         if [ -f /var/run/my_process.pid ]; then
-            kill "$(cat /var/run/my_process.pid)" 2>/dev/null
+            kill "$(cat /var/run/my_process.pid)"
+            rm -f /var/run/my_process.pid
+            echo "manage_my_process stopped"
         fi
-        rm -f /var/run/my_process.pid
-        echo "manage_my_process stopped"
         ;;
     restart)
         if [ -f /var/run/my_process.pid ]; then
-            kill "$(cat /var/run/my_process.pid)" 2>/dev/null
+            kill "$(cat /var/run/my_process.pid)"
+            rm -f /var/run/my_process.pid
         fi
-        rm -f /var/run/my_process.pid
-        bash ./manage_my_process &
+        ./manage_my_process &
         echo $! > /var/run/my_process.pid
         echo "manage_my_process restarted"
         ;;
     *)
         echo "Usage: manage_my_process {start|stop|restart}"
+        exit 1
         ;;
 esac
-
