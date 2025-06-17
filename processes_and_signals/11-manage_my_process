@@ -3,25 +3,27 @@
 
 case "$1" in
     start)
-        ./manage_my_process &
+        # Start the process silently, and record its PID.
+        ./manage_my_process &>/dev/null &
         echo $! > /var/run/my_process.pid
-        echo "manage_my_process started"
         ;;
     stop)
         if [ -f /var/run/my_process.pid ]; then
-            kill "$(cat /var/run/my_process.pid)"
+            # Stop the process silently and remove the PID file.
+            kill "$(cat /var/run/my_process.pid)" &>/dev/null
             rm -f /var/run/my_process.pid
-            echo "manage_my_process stopped"
+            # Per requirements, output exactly "Good" when stopped.
+            echo "Good"
         fi
         ;;
     restart)
         if [ -f /var/run/my_process.pid ]; then
-            kill "$(cat /var/run/my_process.pid)"
+            kill "$(cat /var/run/my_process.pid)" &>/dev/null
             rm -f /var/run/my_process.pid
         fi
-        ./manage_my_process &
+        # Start the process silently, and record its new PID.
+        ./manage_my_process &>/dev/null &
         echo $! > /var/run/my_process.pid
-        echo "manage_my_process restarted"
         ;;
     *)
         echo "Usage: manage_my_process {start|stop|restart}"
