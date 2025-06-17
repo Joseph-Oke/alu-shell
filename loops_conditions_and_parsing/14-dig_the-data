@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
-# Script that groups visitors by IP and HTTP status code from Apache log file
-
-awk '{print $1, $9}' /var/log/apache2/access.log | sort | uniq -c | sort -nr | awk '{printf "%7d %s %s\n", $1, $2, $3}'
+# This script groups visitors by IP and HTTP status code, ordered by occurrence
+awk '{print $1 " " $9}' apache-access.log | sort | uniq -c | sort -rn
